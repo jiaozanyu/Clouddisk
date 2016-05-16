@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+		<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+    <constant name="struts.multipart.maxSize" value="1000000000" />
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+
+    <package name="default" namespace="/" extends="struts-default">
+     <action name="uploadAction" class="com.swu.clouddisk.action.ResultUploadAction" method="uploadFile">
+   <!-- 配置名字为fileUpload的拦截器 -->
+      <interceptor-ref name="fileUpload">
+        <!-- 配置允许上传文件的大小(单位字节) -->
+        <param name="maximumSize">1000000000</param>
+      </interceptor-ref>
+      <interceptor-ref name="defaultStack"></interceptor-ref>
+      <!-- 动态设置保存文件的路径 (Action的属性值)-->
+      <param name="savePath">/upload</param>
+   </action>
+		<action name="Login" class="com.swu.clouddisk.action.LoginAction">
+			<result name="success" type="chain">index</result>
+			<result name="error">/loginerror.html</result>
+		</action>
+		<action name="register" class="com.swu.clouddisk.action.SignAction">
+			<result name="success">/login.html</result>
+			<result name="error">/sign.html</result>
+		</action>
+		
+		<action name="loginout"  class="com.swu.clouddisk.action.LoginAction" method="out">
+			<result>/login.html</result>
+		</action>
+		<action name="index" class="com.swu.clouddisk.action.IndexAction">
+			<result name="success">/index.jsp</result>
+			
+		</action>
+		<action name="index2" class="com.swu.clouddisk.action.IndexAction2">
+			<result name="success">/download.jsp</result>
+			
+		</action>
+		<action name="upload" class="com.swu.clouddisk.action.ResultUploadAction">
+			<result type="chain">index</result>
+		</action>
+		<action name="AddUser" class="com.swu.clouddisk.action.appAction" >
+			<result type="chain">index</result>
+		</action>
+		<action name="DelUser" class="com.swu.clouddisk.action.UserAction" method="Del">
+			<result type="chain">userlist</result>
+		</action>
+		<action name="DelResult" class="com.swu.clouddisk.action.ResultAction">
+			<result type="chain">index</result>
+		</action>
+		<action name="ChangePassword" class="com.swu.clouddisk.action.PasswordAction">
+			<result type="chain">index</result>
+		</action>
+		<action name="userlist" class="com.swu.clouddisk.action.UserListAction">
+			<result>/userlist.jsp</result>
+		</action>
+		<action name="ifuseradd" class="com.swu.clouddisk.action.UseraddListAction">
+			<result>/ifuseradd.jsp</result>
+		</action>
+         <action name="Agree" class="com.swu.clouddisk.action.appuserAction" method="Add">
+			<result type="chain">index</result>
+			
+		</action>
+		<action name="refused" class="com.swu.clouddisk.action.appuserAction" method="Del">
+			<result type="chain">index</result>
+		</action>
+    </package>
+
+
+</struts>
